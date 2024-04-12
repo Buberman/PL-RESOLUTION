@@ -4,15 +4,16 @@ class KnowledgeBase:
         self.clauses = []
     
     
-    def negativetify(self, atom):
+    def getNegative(self, atom):
         if atom[0] == '-':
             return atom[1:]
         else:
             return '-' + atom
     
+
     def checkcomp(self, clause):
         for atom in clause:
-            if negativetify(atom) in clause:
+            if getNegative(atom) in clause:
                 return True
         return False
     
