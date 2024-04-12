@@ -1,8 +1,9 @@
 class KnowledgeBase:
+    #Initialize
     def __init__(self):
         self.clauses = []
     
-    
+    #phủ định
     def getNegative(self, atom):
         if atom[0] == '-':
             return atom[1:]
@@ -16,10 +17,12 @@ class KnowledgeBase:
                 return True
         return False
     
+    #thêm clause vào KB
     def addClause(self, clause):
         if clause not in self.clauses and not self.checkcomp(clause):
             self.clauses.append(clause)
     
+    #Phủ định nguyên cái hàng chờ
     def NegativeQuery(self, query):
         res = []
         for clause in query:
@@ -29,23 +32,6 @@ class KnowledgeBase:
             res.append(new_query)
         return res
     
-    def toCNF(self, clauses):
-        res = []
-        product_all = [[]]
-        for clause in clauses:
-            new_product = []
-            for p in product_all:
-                for q in clause:
-                    new_product.append(p + [q])
-            product_all = new_product
-
-        for i in product_all:
-            new = self.normClause(sum(i, []))
-            if not self.checkComplementary(new) and new not in res:
-                res.append(new)
-        res.sort(key=len)
-        res = self.remove(res)
-        return res
 
     def norClause(self, clause):
         seen = set()
@@ -62,7 +48,7 @@ class KnowledgeBase:
             res.append(atom)
         return res
     
-
+    #Loại bỏ trùng lặp
     def remove_redundant_clauses(self, clauses):
         res = []
         for c in clauses:
@@ -75,9 +61,25 @@ class KnowledgeBase:
                 res.append(c)
         return res
     
-  
+    def toCNF(self, clauses):
+        res = []
+        for clause_combination in self.cartesian_product(clauses):
+            new = self.normClause(sum(clause_combination, []))
+            if not self.checkComplementary(new) and new not in res:
+                res.append(new)
+        res.sort(key=len)
+        res = self.remove_redundant_clauses(res)
+        return res
     
-        
+    def cartesian_product(self, lists):
+        if not lists:
+            yield []
+        else:
+            for item in lists[0]:
+                for rest in self.cartesian_product(lists[1:]):
+                    yield [item] + rest
+
+    
     
     
 
