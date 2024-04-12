@@ -2,7 +2,7 @@ import os
 import solution
 
 # Set input and output directories to the current directory
-INPUT_DIR = './'
+INPUT_DIR = 'PL-RESOLUTION\source'
 OUTPUT_DIR = './'
 
 def readKB(filename):
