@@ -2,8 +2,8 @@ import os
 import solution
 
 # Set input and output directories to the current directory
-INPUT_DIR = 'PL-RESOLUTION\source'
-OUTPUT_DIR = './'
+INPUT_DIR = 'PL-RESOLUTION\source\input'
+OUTPUT_DIR = 'PL-RESOLUTION\source\output'
 
 def readKB(filename):
     content = []
@@ -51,8 +51,8 @@ inputs = os.listdir(INPUT_DIR)
 
 for filename in inputs:
     # Read KB and query from input file
-    KB, query = readKB(INPUT_DIR + filename)
+    KB, query = readKB(INPUT_DIR +'\\' + filename)
     # Perform PL resolution and get result
     result, check = KB.PL_Resolution(query)
     # Write output to a file in the same directory
-    writeOutput(result, check, OUTPUT_DIR + 'out-' + filename)
+    writeOutput(result, check, OUTPUT_DIR + '\\' + filename)

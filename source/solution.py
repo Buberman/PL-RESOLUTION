@@ -107,7 +107,7 @@ class KnowledgeBase:
         tempKB = KnowledgeBase()
         tempKB.clauses = self.clauses.copy()
 
-        neg_query = self.getNegative_query(query)
+        neg_query = self.NegativeList(query)
         for neg_atom in neg_query:
             tempKB.addClause(neg_atom)
 
