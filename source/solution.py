@@ -3,12 +3,21 @@ class KnowledgeBase:
     def __init__(self):
         self.clauses = []
     
+    
     def negativetify(self, atom):
         if atom[0] == '-':
             return atom[1:]
         else:
             return '-' + atom
     
+    def checkcomp(self, clause):
+        for atom in clause:
+            if negativetify(atom) in clause:
+                return True
+        return False
+    
+
+
     def negativeQuery(self, query):
         res = []
         for clause in query:
@@ -21,4 +30,8 @@ class KnowledgeBase:
              return list(itertools.chain.from_iterable(res))
         else:
             return self.toCNF(res)
+    
+    def toCNF(self, clause):
+
+        
 
