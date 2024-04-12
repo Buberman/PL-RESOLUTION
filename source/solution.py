@@ -13,7 +13,7 @@ class KnowledgeBase:
 
     def checkcomp(self, clause):
         for atom in clause:
-            if getNegative(atom) in clause:
+            if self.getNegative(atom) in clause:
                 return True
         return False
     
