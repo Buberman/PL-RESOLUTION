@@ -8,21 +8,13 @@ OUTPUT_DIR = 'PL-RESOLUTION\source\output'
 def readKB(filename):
     content = []
     with open(filename, 'r') as f:
-        # Skip the first line
-        next(f)
         content = f.read().splitlines()
 
-    alpha_size = len(content)
-    query_string = content[:alpha_size]
-    query = []
-    for cnf in query_string:
-        clause = cnf.split()
-        clause = list(filter(lambda x: x != 'OR', clause))
-        query.append(clause)
-
+    alpha_size = 1  # Alpha size is now fixed at 1
+    query = [content[0].split()]  # The query is directly below the alpha size
     KB = solution.KnowledgeBase()
-    KB_size = 0  # No need to read this value anymore
-    KB_string = content[alpha_size + 1:]
+
+    KB_string = content[2:]  # Skip the first line and the query line
     for cnf in KB_string:
         clause = cnf.split()
         clause = list(filter(lambda x: x != 'OR', clause))
@@ -52,7 +44,5 @@ inputs = os.listdir(INPUT_DIR)
 for filename in inputs:
     # Read KB and query from input file
     KB, query = readKB(INPUT_DIR +'\\' + filename)
-    # Perform PL resolution and get result
     result, check = KB.PL_Resolution(query)
-    # Write output to a file in the same directory
-    writeOutput(result, check, OUTPUT_DIR + '\\' + filename)
+    writeOutput(result, check, OUTPUT_DIR + 'out-' + filename)

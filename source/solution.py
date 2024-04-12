@@ -1,3 +1,4 @@
+import itertools
 class KnowledgeBase:
     #Initialize
     def __init__(self):
@@ -23,14 +24,15 @@ class KnowledgeBase:
             self.clauses.append(clause)
     
     #Phủ định nguyên cái hàng chờ
-    def NegativeList(self, list):
-        res = []
-        for clause in list:
-            new_list = []
-            for atom in list:
-                new_list.append(self.getNegative(atom))
-            res.append(new_list)
-        return res
+    def NegativeList(self, query):
+        new_list = []
+        for clause in query:
+            new_clause = []
+            for atom in clause:
+                neg_atom = self.getNegative(atom)
+                new_clause.append(neg_atom)
+            new_list.append(new_clause)
+        return new_list
     
 
     def norClause(self, clause):
@@ -82,7 +84,7 @@ class KnowledgeBase:
     def resolve(self, clause_i, clause_j):
         new_clauses = []
         for atom in clause_i:
-            neg_atom = self.getNegative_atom(atom)
+            neg_atom = self.getNegative(atom)
             if neg_atom in clause_j:
                 new_clause = self.resolve_single(atom, neg_atom, clause_i, clause_j)
                 if new_clause:
@@ -98,8 +100,8 @@ class KnowledgeBase:
             return ['{}']
         else:
             merged_clause = temp_c_i + temp_c_j
-            merged_clause = self.normClause(merged_clause)
-            if not self.checkComplementary(merged_clause) and merged_clause not in self.clauses:
+            merged_clause = self.norClause(merged_clause)
+            if not self.checkcomp(merged_clause) and merged_clause not in self.clauses:
                 return merged_clause
         return None
 
@@ -108,26 +110,31 @@ class KnowledgeBase:
         tempKB.clauses = self.clauses.copy()
 
         neg_query = self.NegativeList(query)
+        print(neg_query)
         for neg_atom in neg_query:
             tempKB.addClause(neg_atom)
-
-        while True:
-            new_clauses = []
-            for i in range(len(tempKB.clauses)):
-                for j in range(i + 1, len(tempKB.clauses)):
-                    resolvents = tempKB.resolve(tempKB.clauses[i], tempKB.clauses[j])
-                    for res in resolvents:
-                        if res not in new_clauses:
-                            new_clauses.append(res)
-
-            if not new_clauses:
-                return [], False
-            elif ['{}'] in new_clauses:
-                return [], True
-
-            for clause in new_clauses:
-                tempKB.addClause(clause)
-    
-
         
+        result = []
+        while True:
+            clause_pairs = []
+            for i in range(len(tempKB.clauses)):
+                for j in range(i+1, len(tempKB.clauses)):
+                    clause_pairs.append((i, j))
+                
+            resolvents = []
+            for pair in clause_pairs:
+                resolvent = tempKB.resolve(tempKB.clauses[pair[0]], tempKB.clauses[pair[1]])
+                if resolvent and resolvent not in resolvents:
+                    resolvents.append(resolvent)
 
+            resolvents = [item for sublist in resolvents for item in sublist]
+            result.append(resolvents)
+
+            if not resolvents:
+                return result, False
+            else:
+                if ['{}'] in resolvents:
+                    return result, True
+                else:
+                    for res in resolvents:
+                        tempKB.addClause(res)
