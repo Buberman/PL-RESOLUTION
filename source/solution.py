@@ -1,3 +1,10 @@
+
+def atom_check(atom):
+    if (atom[0] == '-'):
+        return atom[1:]
+    else:
+        return atom
+
 class KnowledgeBase:
     #Initialize
     def __init__(self):
@@ -9,7 +16,6 @@ class KnowledgeBase:
             return atom[1:]
         else:
             return '-' + atom
-    
 
     def checkcomp(self, clause):
         for atom in clause:
@@ -41,9 +47,7 @@ class KnowledgeBase:
             if atom not in seen:
                 seen.add(atom)
                 unique_clause.append(atom)
-        #print(unique_clause)
-        unique_clause.sort()
-        #print(unique_clause)
+        unique_clause = sorted(unique_clause, key = atom_check)
         res = []
         for atom in unique_clause:
             res.append(atom)
@@ -109,7 +113,7 @@ class KnowledgeBase:
         tempKB.clauses = self.clauses.copy()
 
         neg_query = self.NegativeList(query)
-        print(neg_query)
+        #print(neg_query)
         for neg_atom in neg_query:
             tempKB.addClause(neg_atom)
         
