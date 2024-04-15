@@ -1,15 +1,3 @@
-def sort_atoms(atoms):
-    # Define a custom sorting key function to handle negative atoms
-    def custom_key(atom):
-        # Remove the negation symbol '-' if present
-        if atom[0] == '-':
-            return atom[1:]
-        else:
-            return atom
-
-    # Sort atoms using the custom sorting key function
-    return sorted(atoms, key=custom_key)
-
 class KnowledgeBase:
     #Initialize
     def __init__(self):
@@ -54,10 +42,10 @@ class KnowledgeBase:
                 seen.add(atom)
                 unique_clause.append(atom)
         #print(unique_clause)
-        new_unique_clause =  sort_atoms(unique_clause)
+        unique_clause.sort()
         #print(unique_clause)
         res = []
-        for atom in new_unique_clause:
+        for atom in unique_clause:
             res.append(atom)
         return res
     
@@ -100,7 +88,6 @@ class KnowledgeBase:
                 new_clause = self.resolve_single(atom, neg_atom, clause_i, clause_j)
                 if new_clause:
                     new_clauses.append(new_clause)
-        #new_clauses.sort()
         return new_clauses
 
     def resolve_single(self, atom_i, atom_j, clause_i, clause_j):
@@ -122,7 +109,7 @@ class KnowledgeBase:
         tempKB.clauses = self.clauses.copy()
 
         neg_query = self.NegativeList(query)
-        #print(neg_query)
+        print(neg_query)
         for neg_atom in neg_query:
             tempKB.addClause(neg_atom)
         

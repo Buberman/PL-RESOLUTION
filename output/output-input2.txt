@@ -3,10 +3,8 @@
 -B OR C
 2
 -A OR C
-A OR -B
+-B OR A
 1
-A OR -C
-1
-B OR -C
+-C OR A
 0
 NO
