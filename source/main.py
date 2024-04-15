@@ -41,7 +41,6 @@ def writeOutput(result, check, filename):
 inputs = os.listdir(INPUT_DIR)
 
 for filename in inputs:
-    # Read KB and query from input file
     KB, query = readKB(INPUT_DIR +'\\' + filename)
     result, check = KB.PL_Resolution(query)
     writeOutput(result, check, OUTPUT_DIR + '\\' 'output-' + filename)
