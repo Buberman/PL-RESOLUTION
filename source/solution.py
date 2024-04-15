@@ -128,6 +128,12 @@ class KnowledgeBase:
             for pair in clause_pairs:
                 resolvent = tempKB.resolve(tempKB.clauses[pair[0]], tempKB.clauses[pair[1]])
                 if resolvent and resolvent not in resolvents:
+                    print("Parent")
+                    print(tempKB.clauses[pair[0]])
+                    print(tempKB.clauses[pair[1]])
+                    print("Result")
+                    print(resolvent)
+                    print("\n")
                     resolvents.append(resolvent)
 
             resolvents = [item for sublist in resolvents for item in sublist]
