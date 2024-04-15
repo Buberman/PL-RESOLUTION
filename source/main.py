@@ -1,7 +1,6 @@
 import os
 import solution
 
-# Set input and output directories to the current directory
 INPUT_DIR = 'PL-RESOLUTION\input'
 OUTPUT_DIR = 'PL-RESOLUTION\output'
 
@@ -10,11 +9,11 @@ def readKB(filename):
     with open(filename, 'r') as f:
         content = f.read().splitlines()
 
-    alpha_size = 1  # Alpha size is now fixed at 1
-    query = [content[0].split()]  # The query is directly below the alpha size
+    alpha_size = 1  #
+    query = [content[0].split()]  
     KB = solution.KnowledgeBase()
 
-    KB_string = content[2:]  # Skip the first line and the query line
+    KB_string = content[2:]  #
     for cnf in KB_string:
         clause = cnf.split()
         clause = list(filter(lambda x: x != 'OR', clause))
@@ -22,7 +21,7 @@ def readKB(filename):
 
     return KB, query
 
-# No changes needed in the writeOutput function
+
 def writeOutput(result, check, filename):
     with open(filename, 'w') as f:
         for loop_res in result:
@@ -38,7 +37,7 @@ def writeOutput(result, check, filename):
             f.write('YES')
         else:
             f.write('NO')
-# Get list of input files in the current directory
+
 inputs = os.listdir(INPUT_DIR)
 
 for filename in inputs:
