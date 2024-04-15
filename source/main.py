@@ -2,8 +2,8 @@ import os
 import solution
 
 # Set input and output directories to the current directory
-INPUT_DIR = 'PL-RESOLUTION\source\input'
-OUTPUT_DIR = 'PL-RESOLUTION\source\output'
+INPUT_DIR = 'PL-RESOLUTION\input'
+OUTPUT_DIR = 'PL-RESOLUTION\output'
 
 def readKB(filename):
     content = []
@@ -45,4 +45,4 @@ for filename in inputs:
     # Read KB and query from input file
     KB, query = readKB(INPUT_DIR +'\\' + filename)
     result, check = KB.PL_Resolution(query)
-    writeOutput(result, check, OUTPUT_DIR + 'out-' + filename)
+    writeOutput(result, check, OUTPUT_DIR + '\\' 'output-' + filename)

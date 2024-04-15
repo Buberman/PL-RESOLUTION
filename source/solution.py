@@ -1,4 +1,3 @@
-import itertools
 class KnowledgeBase:
     #Initialize
     def __init__(self):
@@ -42,9 +41,9 @@ class KnowledgeBase:
             if atom not in seen:
                 seen.add(atom)
                 unique_clause.append(atom)
-
+        #print(unique_clause)
         unique_clause.sort()
-
+        #print(unique_clause)
         res = []
         for atom in unique_clause:
             res.append(atom)
